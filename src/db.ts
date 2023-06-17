@@ -12,6 +12,7 @@ export class DB {
 
   getItem(key: string): string {
     const filePath = path.join(this.path, key);
+    console.log({filePath}, key)
     return fs.readFileSync(filePath, 'utf8');
   }
 

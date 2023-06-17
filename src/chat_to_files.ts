@@ -14,7 +14,8 @@ export function parseChat(chat: string): [string, string][] {
     return files;
   }
   
-  export function toFiles(chat: string, workspace: DB): void {
+  export function toFiles(workspace: DB, chat?: string): void {
+    if (!chat) return;
     workspace.setItem('all_output.txt', chat);
   
     const files = parseChat(chat);

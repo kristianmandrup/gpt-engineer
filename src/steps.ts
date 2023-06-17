@@ -1,7 +1,6 @@
 import { AI}  from './ai';
 import { toFiles } from './chat_to_files';
 import { DBs } from './db';
-import * as fs from 'fs';
 
 function setupSysPrompt(dbs: DBs): string {
   return dbs.identity.getItem('setup') + '\nUseful to know:\n' + dbs.identity.getItem('philosophy');
@@ -9,18 +8,29 @@ function setupSysPrompt(dbs: DBs): string {
 
 async function run(ai: AI, dbs: DBs) {
   const messages = await ai.start(setupSysPrompt(dbs), dbs.input.getItem('main_prompt'));
-  await toFiles(messages[messages.length - 1]['content'], dbs.workspace);
+  const lastMessage = messages[messages.length - 1];
+  if (!lastMessage) return [];
+  await toFiles(dbs.workspace, lastMessage.content);
   return messages;
 }
 
 async function clarify(ai: AI, dbs: DBs) {
-  const messages = [ai.fsystem(dbs.identity.getItem('qa'))];
+  console.log('clarify')
+  const qa = dbs.identity.getItem('qa')
+  console.log({qa})
+  const qaMsgs = ai.fsystem(qa);
+  console.log({qaMsgs})
+  const messages = [qaMsgs];
+  console.log({messages})
   let user: any = dbs.input.getItem('main_prompt');
+  console.log({user})
   while (true) {
     const response = await ai.next(messages, user);
-    const lastMessage = response[response.length - 1];
-    const content = lastMessage['content'].trim().toLowerCase();
-    if (content === 'no') {
+    console.log({response})
+    const lastMessage = response[response.length - 1] || {};
+    const content = lastMessage.content;
+    const possibleCommand = content ? content.trim().toLowerCase() : ''
+    if (!content || possibleCommand === 'no') {
       break;
     }
     console.log();
@@ -37,10 +47,14 @@ async function clarify(ai: AI, dbs: DBs) {
 }
 
 async function runClarified(ai: AI, dbs: DBs) {
+  console.log('runClarified')
   const messages = JSON.parse(dbs.logs.getItem(clarify.name));
+  console.log({messages})
   messages[0] = ai.fsystem(setupSysPrompt(dbs));
   const response = await ai.next(messages, dbs.identity.getItem('use_qa'));
-  await toFiles(response[response.length - 1]['content'], dbs.workspace);
+  const lastResponse = response[response.length - 1] || {};
+  if (!lastResponse) return response
+  await toFiles(dbs.workspace, lastResponse.content);
   return response;
 }
 

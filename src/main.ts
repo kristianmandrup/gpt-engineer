@@ -19,23 +19,25 @@ program
 // program.parse(process.argv);
 
 const run = async (options: Record<string, any>) => {
-  const dirName = process.cwd();
-  options.projectPath = options.projectPath || './'
-  const projectPath = options.projectPath ?? path.join(dirName, 'example');
+  const dirPath = options.projectPath || process.cwd();
+  const projectPath = path.join(dirPath, 'example');
   const runPrefix = options.runPrefix ?? '';
   const model = options.model ?? 'gpt-4';
   const temperature = options.temperature ?? 0.1;
   const inputPath = projectPath;
   const memoryPath = path.join(projectPath, runPrefix + 'memory');
   const workspacePath = path.join(projectPath, runPrefix + 'workspace');
+  const identityPath = path.join(dirPath, 'identity');
+  const logsPath =path.join(memoryPath, 'logs')
 
   console.log('paths', {
     options,
-    dirName,
+    dirPath,
     projectPath,
     inputPath,
     memoryPath,
-    workspacePath
+    workspacePath,
+    identityPath
   });
 
   const ai = new AI({
@@ -45,11 +47,13 @@ const run = async (options: Record<string, any>) => {
 
   const dbs = {
     memory: new DB(memoryPath),
-    logs: new DB(path.join(memoryPath, 'logs')),
+    logs: new DB(logsPath),
     input: new DB(inputPath),
     workspace: new DB(workspacePath),
-    identity: new DB(path.join(dirName, 'identity')),
+    identity: new DB(identityPath),
   };
+
+  console.log('processing steps')
 
   for (const step of STEPS) {
     const messages = await step(ai, dbs);
