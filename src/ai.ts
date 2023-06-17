@@ -37,7 +37,7 @@ export class AI {
     }
     console.log('next', {messages, prompt})
     console.log('call OpenAIAPI');
-    let response: CreateChatCompletionResponse
+    let response
     try {
       const chatRequest: CreateChatCompletionRequest = {
         messages: messages,
@@ -50,9 +50,12 @@ export class AI {
       console.error(ex);
       throw ex;
     }
+    let data: CreateChatCompletionResponse = response.data;
 
+    console.log('parsing responses', data.choices)
     const chat: string[] = [];
-    for (const chunk of response.choices) {
+    for (const chunk of data.choices) {
+      console.log({ chunk })      
       const delta = chunk?.message?.content ?? "";
       console.log(delta);
       chat.push(delta);
