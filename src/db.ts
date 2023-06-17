@@ -7,7 +7,7 @@ export class DB {
   constructor(path: string) {
     this.path = path;
     console.log('mkdirsync', path);
-    // fs.mkdirSync(this.path, { recursive: true });
+    fs.mkdirSync(this.path, { recursive: true });
   }
 
   getItem(key: string): string {

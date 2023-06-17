@@ -10,24 +10,21 @@ import { program } from 'commander';
 program
   .version('1.0.0')
   // .command('chat')
-  .option('-p --projectPath')
-  .option('-r --runPrefix')
-  .option('-m --model')
+  .option('-p --projectPath <string>')
+  .option('-r --runPrefix <string>')
+  .option('-m --model <string>')
   .option('-t --temperature <number>')  
   .description('Chat to GPT-engineer and have him/her generate your application')
 
 // program.parse(process.argv);
 
 const run = async (options: Record<string, any>) => {
-  console.log('running...', options);
-
   const dirName = process.cwd();
   options.projectPath = options.projectPath || './'
   const projectPath = options.projectPath ?? path.join(dirName, 'example');
   const runPrefix = options.runPrefix ?? '';
   const model = options.model ?? 'gpt-4';
   const temperature = options.temperature ?? 0.1;
-
   const inputPath = projectPath;
   const memoryPath = path.join(projectPath, runPrefix + 'memory');
   const workspacePath = path.join(projectPath, runPrefix + 'workspace');
