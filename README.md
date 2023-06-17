@@ -3,7 +3,6 @@
 
 GPT Engineer is made to be easy to adapt, extend, and make your agent learn how you want your code to look. It generates an entire codebase based on a prompt. 
 
-
 ## Project philosophy
 - Simple to get value
 - Flexible and easy to add new own "AI steps". See `steps.py`.
@@ -14,17 +13,20 @@ GPT Engineer is made to be easy to adapt, extend, and make your agent learn how 
 - Simplicity, all computation is "resumable" and persisted to the filesystem
 
 
+
+![output](https://github.com/AntonOsika/gpt-engineer/assets/4467025/a6938d43-2ac1-4cf1-98d1-93eea1bdfce4)
+
+
 ## Usage
 
 **Setup**:
-
 - `pip install -r requirements.txt`
 - `export OPENAI_API_KEY=[your api key]` with a key that has GPT4 access
 
 **Run**:
-- Create a new empty folder with a `main_prompt` file (or copy the example folder `cp example -r my-new-project`)
+- Create a new empty folder with a `main_prompt` file (or copy the example folder `cp -r example/ my-new-project`)
 - Fill in the `main_prompt` in your new folder
-- run `python main.py my-new-project`
+- Run `python -m gpt_engineer.main my-new-project`
 
 **Results**:
 - Check the generated files in my-new-project/workspace
@@ -43,10 +45,6 @@ Editing the identity, and evolving the main_prompt, is currently how you make th
 Each step in steps.py will have its communication history with GPT4 stored in the logs folder, and can be rerun with scripts/rerun_edited_message_logs.py.
 
 
-## Demo
-
-
+## High resolution example
 
 https://github.com/AntonOsika/gpt-engineer/assets/4467025/6e362e45-4a94-4b0d-973d-393a31d92d9b
-
-
