@@ -2,6 +2,24 @@ import { AI}  from './ai';
 import { toFiles } from './chat_to_files';
 import { DBs } from './db';
 
+
+const readline = require('readline');
+
+function question(prompt: string): Promise<string> {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  return new Promise((resolve) => {
+    rl.question(prompt, (answer: string) => {
+      resolve(answer);
+      rl.close();
+    });
+  });
+}
+
+
 function setupSysPrompt(dbs: DBs): string {
   return dbs.identity.getItem('setup') + '\nUseful to know:\n' + dbs.identity.getItem('philosophy');
 }
@@ -33,9 +51,12 @@ async function clarify(ai: AI, dbs: DBs) {
     if (!content || possibleCommand === 'no') {
       break;
     }
-    console.log();
-    user = prompt('(answer in text, or "q" to move on)\n');
-    console.log();
+    console.log('clarify');
+    
+    user = await question('(answer in text, or "q" to move on)\n');
+    console.log(`User input: ${user}`);  
+    //user = prompt('(answer in text, or "q" to move on)\n');
+    //console.log();
     if (!user || user === 'q') {
       break;
     }

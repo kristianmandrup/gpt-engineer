@@ -8,6 +8,8 @@
     "test": "tests"
   },
   "scripts": {
+    "start": "npx ts-node src/main.ts chat -p .",
+    "help": "npx ts-node src/main.ts chat --help",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
