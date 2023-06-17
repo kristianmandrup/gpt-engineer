@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-class DB {
+export class DB {
   private path: string;
 
   constructor(path: string) {
@@ -20,7 +20,7 @@ class DB {
   }
 }
 
-interface DBs {
+export interface DBs {
   memory: DB;
   logs: DB;
   identity: DB;
@@ -28,7 +28,7 @@ interface DBs {
   workspace: DB;
 }
 
-const dbs: DBs = {
+export const dbs: DBs = {
   memory: new DB('/path/to/memory'),
   logs: new DB('/path/to/logs'),
   identity: new DB('/path/to/identity'),

@@ -1,21 +1,21 @@
-import AI from './ai';
+import { AI}  from './ai';
 import { toFiles } from './chat_to_files';
 import { DBs } from './db';
 import * as fs from 'fs';
 
 function setupSysPrompt(dbs: DBs): string {
-  return dbs.identity['setup'] + '\nUseful to know:\n' + dbs.identity['philosophy'];
+  return dbs.identity.getItem('setup') + '\nUseful to know:\n' + dbs.identity.getItem('philosophy');
 }
 
 async function run(ai: AI, dbs: DBs) {
-  const messages = ai.start(setupSysPrompt(dbs), dbs.input['main_prompt']);
+  const messages = await ai.start(setupSysPrompt(dbs), dbs.input.getItem('main_prompt'));
   await toFiles(messages[messages.length - 1]['content'], dbs.workspace);
   return messages;
 }
 
 async function clarify(ai: AI, dbs: DBs) {
-  const messages = [ai.fsystem(dbs.identity['qa'])];
-  let user = dbs.input['main_prompt'];
+  const messages = [ai.fsystem(dbs.identity.getItem('qa'))];
+  let user: any = dbs.input.getItem('main_prompt');
   while (true) {
     const response = await ai.next(messages, user);
     const lastMessage = response[response.length - 1];
@@ -37,14 +37,14 @@ async function clarify(ai: AI, dbs: DBs) {
 }
 
 async function runClarified(ai: AI, dbs: DBs) {
-  const messages = JSON.parse(dbs.logs[clarify.name]);
+  const messages = JSON.parse(dbs.logs.getItem(clarify.name));
   messages[0] = ai.fsystem(setupSysPrompt(dbs));
-  const response = await ai.next(messages, dbs.identity['use_qa']);
+  const response = await ai.next(messages, dbs.identity.getItem('use_qa'));
   await toFiles(response[response.length - 1]['content'], dbs.workspace);
   return response;
 }
 
-const STEPS = [clarify, runClarified];
+export const STEPS = [clarify, runClarified];
 
 // Future steps that can be added:
 // improveFiles,

@@ -25,6 +25,10 @@
   },
   "homepage": "https://github.com/AntonOsika/gpt-engineer#readme",
   "dependencies": {
+    "commander": "^11.0.0",
     "openai": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.1"
   }
 }

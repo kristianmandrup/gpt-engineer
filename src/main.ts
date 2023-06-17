@@ -1,24 +1,24 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import AI from './ai';
-import DB from './db';
+import { AI } from './ai';
+import { DB } from './db';
 import { STEPS } from './steps';
-import { toFiles } from './chat_to_files';
 
 import { program } from 'commander';
 
 // instead of typer
 program
   .version('1.0.0')
-  .command('greet <name>')
+  .command('chat')
+  .option('-p --projectPath')
+  .option('-r --runPrefix')
+  .option('-m --model')
+  .option('-t --temperature <number>')  
   .description('Greet a person')
 
 program.parse(process.argv);
 
-type Opts = { projectPath?: string; runPrefix?: string; model?: string; temperature?: number }
-
-const processChatPrompt = async () => {
-    const options: Opts = program.parse(process.argv); 
+const processChatPrompt = async (options: Record<string, any>) => {
     const dirName = window.location.pathname;
     const projectPath = options.projectPath ?? path.join(dirName, 'example');
     const runPrefix = options.runPrefix ?? '';
@@ -34,13 +34,13 @@ const processChatPrompt = async () => {
       temperature,
     });
   
-    const dbs = new DBs({
+    const dbs = {
       memory: new DB(memoryPath),
       logs: new DB(path.join(memoryPath, 'logs')),
       input: new DB(inputPath),
       workspace: new DB(workspacePath),
       identity: new DB(path.join(__dirname, 'identity')),
-    });
+    };
   
     for (const step of STEPS) {
       const messages = await step(ai, dbs);
@@ -48,6 +48,4 @@ const processChatPrompt = async () => {
     }
   }
 
-program.action('chat', processChatPrompt);
-
-program();
+program.action(processChatPrompt);

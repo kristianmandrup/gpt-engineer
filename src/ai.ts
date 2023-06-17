@@ -1,16 +1,20 @@
-import OpenAI from 'openai';
+import { Configuration, OpenAIApi } from "openai";
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 interface Message {
   role: string;
   content: string;
 }
 
-class AI {
+export class AI {
   private client: any;
   private kwargs: Record<string, any>;
 
   constructor(kwargs: Record<string, any>) {
-    this.client = new OpenAI({ /* API credentials and options */ });
+    this.client = new OpenAIApi(configuration);
     this.kwargs = kwargs;
   }
 
@@ -23,11 +27,11 @@ class AI {
     return this.next(messages);
   }
 
-  private fsystem(msg: string): Message {
+  public fsystem(msg: string): Message {
     return { role: "system", content: msg };
   }
 
-  private fuser(msg: string): Message {
+  public fuser(msg: string): Message {
     return { role: "user", content: msg };
   }
 

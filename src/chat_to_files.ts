@@ -1,4 +1,6 @@
-function parseChat(chat: string): [string, string][] {
+import { DB } from "./db";
+
+export function parseChat(chat: string): [string, string][] {
     const regex = /```(.*?)```/gs;
     const matches = chat.matchAll(regex);
   
@@ -12,11 +14,11 @@ function parseChat(chat: string): [string, string][] {
     return files;
   }
   
-  function toFiles(chat: string, workspace: Record<string, string>): void {
-    workspace['all_output.txt'] = chat;
+  export function toFiles(chat: string, workspace: DB): void {
+    workspace.setItem('all_output.txt', chat);
   
     const files = parseChat(chat);
     for (const [fileName, fileContent] of files) {
-      workspace[fileName] = fileContent;
+      workspace.setItem(fileName, fileContent);
     }
   }
