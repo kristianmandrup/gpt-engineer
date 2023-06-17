@@ -14,12 +14,13 @@ program
   .option('-r --runPrefix')
   .option('-m --model')
   .option('-t --temperature <number>')  
-  .description('Greet a person')
+  .description('Chat to GPT-engineer and have him/her generate your application')
 
 program.parse(process.argv);
 
 const processChatPrompt = async (options: Record<string, any>) => {
-    const dirName = window.location.pathname;
+    const dirName = process.cwd();
+    options.projectPath = options.projectPath || './'
     const projectPath = options.projectPath ?? path.join(dirName, 'example');
     const runPrefix = options.runPrefix ?? '';
     const model = options.model ?? 'gpt-4';
@@ -33,13 +34,22 @@ const processChatPrompt = async (options: Record<string, any>) => {
       model,
       temperature,
     });
-  
+
+    console.log('paths', {
+      options,
+      dirName,
+      projectPath,
+      inputPath,
+      memoryPath,
+      workspacePath
+    });
+
     const dbs = {
       memory: new DB(memoryPath),
       logs: new DB(path.join(memoryPath, 'logs')),
       input: new DB(inputPath),
       workspace: new DB(workspacePath),
-      identity: new DB(path.join(__dirname, 'identity')),
+      identity: new DB(path.join(dirName, 'identity')),
     };
   
     for (const step of STEPS) {

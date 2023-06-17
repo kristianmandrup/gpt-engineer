@@ -16,8 +16,36 @@ GPT Engineer is made to be easy to adapt, extend, and make your agent learn how 
 
 ![output](https://github.com/AntonOsika/gpt-engineer/assets/4467025/a6938d43-2ac1-4cf1-98d1-93eea1bdfce4)
 
+## Usage NodeJS/TypeScript (WIP)
 
-## Usage
+### Configuration
+
+Set environment variable `OPENAI_API_KEY` to your OpenAI API Key. 
+This can f.ex be done simply by supplying it in a `.env` file.
+A sample `.env.example` file is included in the repo which just needs to be renamed.
+
+Please make sure that the `.env` file is in `.gitignore` so it is not copied to any git repo. 
+
+### Run CLI command
+
+Run CLI via tsnode:
+
+`npx ts-node src/main.ts chat --help` 
+
+Currently the error is:
+
+```bash
+npx ts-node src/main.ts chat --help
+Need to install the following packages:
+  ts-node@10.9.1
+Ok to proceed? (y) y
+Error: ENOENT: no such file or directory, mkdir '/path/to/memory'
+    at Object.mkdirSync (node:fs:1395:3)
+    at new DB (/Users/kristian/repos/personal/ai-projects/gpt-engineer/src/db.ts:9:8)
+    at Object.<anonymous> (/Users/kristian/repos/personal/ai-projects/gpt-engineer/src/db.ts:32:11)
+```
+
+## Usage Python
 
 **Setup**:
 - `pip install -r requirements.txt`

@@ -32,6 +32,7 @@ Thumbs.db
 # this application's specific files
 archive
 node_modules
+.env
 
 # any log file
 *log.txt

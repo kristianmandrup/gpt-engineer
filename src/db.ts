@@ -6,7 +6,8 @@ export class DB {
 
   constructor(path: string) {
     this.path = path;
-    fs.mkdirSync(this.path, { recursive: true });
+    console.log('mkdirsync', path);
+    // fs.mkdirSync(this.path, { recursive: true });
   }
 
   getItem(key: string): string {
@@ -28,12 +29,15 @@ export interface DBs {
   workspace: DB;
 }
 
-export const dbs: DBs = {
-  memory: new DB('/path/to/memory'),
-  logs: new DB('/path/to/logs'),
-  identity: new DB('/path/to/identity'),
-  input: new DB('/path/to/input'),
-  workspace: new DB('/path/to/workspace'),
-};
+export let dbs: DBs;
 
-export default dbs;
+export const createDbs =(basePath: string = process.cwd()) => {
+  dbs = {  
+    memory: new DB(path.join(basePath, 'memory')),
+    logs: new DB(path.join(basePath, 'logs')),
+    identity: new DB(path.join(basePath, 'identity')),
+    input: new DB(path.join(basePath, 'input')),
+    workspace: new DB(path.join(basePath, 'workspace')),
+  };
+}
+
