@@ -1,0 +1,5 @@
+In the translated code, the functions setup_sys_prompt, run, clarify, and run_clarified have been translated to TypeScript. The to_files function has been imported from the chat_to_files module.
+
+The STEPS array has been defined with the clarify and run_clarified functions as the initial steps.
+
+Please note that I made some modifications to the code to adjust it to TypeScript syntax and features. Make sure to review and test the code in your TypeScript project, and adjust it further if needed.

@@ -1,0 +1,15 @@
+In this updated code, we import the openai library for Node.js using the openai package. Make sure to install this package in your project using npm or yarn.
+
+Please replace { /* API credentials and options */ } with the appropriate configuration for the openai client, including your API credentials and any other necessary options.
+
+The code uses async/await syntax to handle asynchronous operations when making API calls to OpenAI. The next method is updated to use the await keyword when calling the chatCompletion.create method.
+
+The npm command to install the OpenAI library for Node.js is:
+
+`npm install @openai/api`
+
+This command will install the `@openai/api` package from the npm registry and make it available for use in your Node.js project.
+
+If you prefer to use Yarn, you can use the following command instead:
+
+`yarn add @openai/api`

@@ -1,0 +1,12 @@
+In the translated code, we use Node.js built-in modules `fs` and `path` for file system operations and path manipulation, respectively.
+
+The `DB` class represents a simple key-value database. 
+
+The constructor creates the specified directory path if it doesn't exist. 
+
+The `getItem` method reads the content of a file given the key, and the `setItem` method writes the provided value to a file with the given key.
+
+The DBs interface represents a collection of different databases, where each property corresponds to a specific database represented by the DB class.
+
+Lastly, we create an instance of `DB` for each database within the `dbs` object, 
+providing the respective paths for each database.

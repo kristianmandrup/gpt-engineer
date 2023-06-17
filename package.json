@@ -1,0 +1,30 @@
+{
+  "name": "gpt-engineer",
+  "version": "1.0.0",
+  "description": "GPT engineer for TypeScript",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonOsika/gpt-engineer.git"
+  },
+  "keywords": [
+    "gpt",
+    "engineer"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonOsika/gpt-engineer/issues"
+  },
+  "homepage": "https://github.com/AntonOsika/gpt-engineer#readme",
+  "dependencies": {
+    "openai": "^3.3.0"
+  }
+}
