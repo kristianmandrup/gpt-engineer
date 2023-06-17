@@ -22,7 +22,7 @@ const run = async (options: Record<string, any>) => {
   const dirPath = options.projectPath || process.cwd();
   const projectPath = path.join(dirPath, 'example');
   const runPrefix = options.runPrefix ?? '';
-  const model = options.model ?? 'gpt-4';
+  const model = options.model ?? "gpt-3.5-turbo"; // 'gpt-4';
   const temperature = options.temperature ?? 0.1;
   const inputPath = projectPath;
   const memoryPath = path.join(projectPath, runPrefix + 'memory');

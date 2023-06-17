@@ -41,11 +41,11 @@ export class AI {
     try {
       const chatRequest: CreateChatCompletionRequest = {
         messages: messages,
-        model: this.kwargs.model,
+        model: this.kwargs.model || "gpt-3.5-turbo",
         ...this.kwargs,
       }
-
-       response = await this.client.createChatCompletion(chatRequest);  
+      console.log('calling createChatCompletion with:', chatRequest);
+      response = await this.client.createChatCompletion(chatRequest);  
     } catch (ex) {
       console.error(ex);
       throw ex;
