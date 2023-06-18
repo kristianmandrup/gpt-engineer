@@ -22,7 +22,7 @@ const run = async (options: Record<string, any>) => {
   const dirPath = options.projectPath || process.cwd();
   const projectPath = path.join(dirPath, 'example');
   const runPrefix = options.runPrefix ?? '';
-  const model = options.model ?? "gpt-3.5-turbo"; // 'gpt-4';
+  const model = options.model ?? 'gpt-3.5-turbo'; //  "gpt-3.5-turbo"; // 'gpt-4' does not work ;
   const temperature = options.temperature ?? 0.1;
   const inputPath = projectPath;
   const memoryPath = path.join(projectPath, runPrefix + 'memory');
@@ -74,6 +74,7 @@ async function main() {
       await main();
   } catch (e) {
       // Deal with the fact the chain failed
+      console.error('main',e);
   }
   // `text` is not available here
 })();
